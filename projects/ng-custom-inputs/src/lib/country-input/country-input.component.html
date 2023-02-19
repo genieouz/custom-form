@@ -1,0 +1,98 @@
+<form
+  [formGroup]="form"
+  [attr.uniqueChoice]="true"
+  fxFlex="100"
+  fxLayout="row wrap"
+  fxLayoutAlign="start start"
+  class="form"
+>
+  <div
+    class="select-container"
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="start start"
+    edacyDropdown
+    [dropdownContent]="dropdownContent"
+  >
+    <mat-icon class="mat-icon-rtl-mirror material-icons-outlined arrow-dropdown"
+      >keyboard_arrow_down
+    </mat-icon>
+    <!-- <div class="select-control form-control"></div> -->
+    <div
+    fxLayout="row"
+    fxLayoutAlign="start start"
+    fxLayoutGap="8px"
+      fxFlex="100"
+      class="select-box form-control"
+      [attr.data_dropdown]="'select_' + name"
+    >
+      <span class="placeholder" *ngIf="placeholder && !currentValue">
+        {{placeholder}}
+      </span>
+      <ng-container *ngIf="currentOption">
+        <span class="flag-icon flag-icon-{{lowercase(currentOption.code)}} flag-icon-squared"></span><span class="ell">
+          {{autoFormat
+            ? (currentLabel)
+            : currentLabel
+        }}</span>
+      </ng-container>
+    </div>
+  </div>
+  <ng-template #dropdownContent>
+    <form
+      class="dropdown-search form-container-default"
+      fxFlex="100"
+      fxFlayout="row wrap"
+      fxLayoutAlign="start center"
+      *ngIf="withSearchOption && options.length"
+    >
+      <div class="form-group" fxFlex="100">
+        <input
+          class="form-control dropdown-search "
+          fxFlex="100"
+          [(ngModel)]="searchText"
+          name="searchText"
+          placeholder="{{ 'search' }}..."
+          appFocusOnShow
+        />
+      </div>
+    </form>
+    <div
+      class="options with-search-input"
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+    >
+      <option
+        *ngIf="options.length == 0"
+        disabled
+        class="option"
+        fxFlex="100"
+        fxFlayout="row wrap"
+        fxLayoutAlign="start center"
+        >{{ noOptionsAvailableMessage }}</option
+      >
+      <div
+        class="option"
+        *ngFor="
+          let option of !withSearchOption
+            ? options
+            : (options | filter: searchText)
+        "
+        (click)="changeValue(option)"
+        fxFlex="100"
+        fxFlayout="row wrap"
+        fxLayoutAlign="start center"
+        fxLayoutGap="8px"
+        title="{{ option.name }}"
+      >
+      <span class="flag-icon flag-icon-{{lowercase(option.code)}} flag-icon-squared"></span>
+      <span class="ell">{{
+        autoFormat
+          ? (option.name)
+          : option.name
+      }}</span>
+      </div>
+    </div>
+  </ng-template>
+</form>
