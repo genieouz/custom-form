@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ISelectOption } from '../types/select-option.interface';
 import { getData } from 'country-list';
 
 @Component({
   selector: 'lib-country-input',
   templateUrl: './country-input.component.html',
-  styleUrls: ['./country-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./country-input.component.scss']
 })
 export class CountryInputComponent {
   @Input() form: FormGroup;
